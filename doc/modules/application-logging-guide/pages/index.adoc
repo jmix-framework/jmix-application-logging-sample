@@ -1,4 +1,4 @@
-:sample-project: jmix-$PROJECT_NAME-sample
+:sample-project: jmix-application-logging-sample
 
 = Application Logging in Jmix
 
