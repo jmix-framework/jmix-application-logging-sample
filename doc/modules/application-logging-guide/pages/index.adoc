@@ -302,7 +302,7 @@ To set up the ELK Stack, we will use Docker to run Elasticsearch, Logstash, and 
 
 [source,yml,indent=0]
 ----
-include::example$docker-compose.yml
+include::example$/docker-compose.yml
 ----
 
 This configuration starts three containers: Elasticsearch is responsible for storing the log data, Logstash receives logs from the Jmix application and forwards them to Elasticsearch for storage, and Kibana provides a web interface where you can visualize and search through the log data.
