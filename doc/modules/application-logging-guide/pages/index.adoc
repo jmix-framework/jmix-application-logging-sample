@@ -316,7 +316,8 @@ $ docker compose up
 
 Once the services are running, Kibana will be accessible at `http://localhost:5601`, where you can explore and visualize logs in real-time.
 
-=== Configuring the Jmix Application for Centralized Logging
+[[configure-logging-to-logstash]]
+=== Configure Logging to Logstash
 
 Next, we will configure the Jmix application to send logs to Logstash, which will forward them to Elasticsearch. This involves two steps: adding the necessary dependencies and modifying the logging configuration.
 
