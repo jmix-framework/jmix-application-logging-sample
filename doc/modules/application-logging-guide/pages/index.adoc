@@ -73,8 +73,8 @@ For more details on setting up and customizing logging in Spring Boot, including
 
 https://docs.spring.io/spring-boot/reference/features/logging.html[Spring Boot Logging Documentation]
 
-[[how-to-log-a-log-message-in-jmix]]
-== How to Write a Log Message in Jmix
+[[writing-log-messages-in-jmix]]
+== Writing Log Messages in Jmix
 
 Writing a log message in a Jmix application is straightforward, much like in any other Java application. Jmix, by default, is configured with Slf4J and Logback, which are also used internally for framework logging.
 
@@ -106,14 +106,16 @@ These levels act as rough categories for the type of event being logged, helping
 There is no strict rule on when to use each level—it’s up to you as the developer to decide what `INFO`, `WARN`, and `ERROR` mean within the context of your application. The goal is to use these categories in a way that best fits your specific use case.
 
 For more information, see the official Slf4J documentation on https://www.slf4j.org/api/org/apache/log4j/Level.html[logging levels].
-[[adjusting-logging-configuration]]
-== Adjusting Logging Configuration
+
+[[logging-configuration]]
+== Logging Configuration
 
 In Spring Boot applications, you can adjust logging configurations in two main ways: using the `application.properties` file for simple configurations or by creating a `logback-spring.xml` file for more advanced settings.
 
 The `application.properties` file is useful for defining basic settings such as log levels and destinations, while the `logback-spring.xml` file offers more extensive options like defining appenders and formatting log output in greater detail.
 
-=== Configuring Logging with `application.properties`
+[[application-properties]]
+=== application.properties
 
 In Spring Boot, including Jmix applications, you can easily adjust logging levels and behaviors through the `application.properties` file. By default, Jmix generates a handful of useful logging levels for different parts of the source code into the default `application.properties`. You can modify these levels to increase or decrease verbosity depending your needs.
 
@@ -142,7 +144,8 @@ This configuration sets all classes in the `service` package of the sample appli
 For more information on logging levels and configuration options, refer to the official Spring Boot documentation:
 https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.log-levels[Spring Boot Logging Levels Documentation^].
 
-=== Configuring Advanced Logging with `logback-spring.xml`
+[[advanced-logback-configuration]]
+=== Advanced Logback Configuration
 
 While `application.properties` provides basic logging configuration, you can create a `logback-spring.xml` file in the `src/main/resources` directory for more advanced customization. This file allows you to define appenders, log formats, and manage more complex logging destinations.
 
@@ -156,7 +159,8 @@ include::example$/src/main/resources/logback-spring.xml[tags=]
 
 Using a custom `logback-spring.xml` allows for greater flexibility in managing how logs are output and stored, offering more fine-tuned control compared to the `application.properties` file.
 
-=== Changing Logging Levels with Environment Variables
+[[environment-variables]]
+=== Environment Variables
 
 In addition to configuring logging levels in `application.properties`, Spring Boot allows you to modify logging levels dynamically using environment variables. This approach is especially useful in containerized environments (e.g., Docker or Kubernetes), where configuration changes can be made at deployment time without modifying the source code.
 
@@ -175,7 +179,7 @@ This dynamic approach is useful for scenarios where you want to adjust the loggi
 For more details on custom logback logging configuration in Spring Boot, refer to the official https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.custom-log-configuration[Spring Boot Custom Logging Configuration^].
 
 [[logging-sql-statements]]
-=== Logging SQL Statements in Jmix
+== Logging SQL Statements
 
 Since Jmix applications interact heavily with the database, it is often important to understand exactly how the application communicates with the database. However, sometimes it's not possible to get the full picture just by looking at the application source code. In such cases, enabling SQL logging can be very useful, especially when trying to diagnose performance issues, identify inefficient query execution, or verify that the correct database operations are being performed.
 
@@ -281,8 +285,8 @@ It is important to clear the MDC context after the operation is complete using `
 
 For more details on how MDC works, refer to the official Logback documentation: https://logback.qos.ch/manual/mdc.html[Logback Manual: MDC].
 
-[[logging-to-a-centralized-logging-solution]]
-== Logging to a Centralized Logging Solution
+[[centralized-logging]]
+== Centralized Logging
 
 With centralized logging, all log data is collected and stored in one place, rather than scattered across individual servers or files. This makes it much easier to search, access, and analyze logs, no matter the size of your application. Even for smaller applications, centralized logging can be helpful because it allows you to quickly find specific log entries and troubleshoot issues more efficiently.
 
@@ -296,7 +300,8 @@ Centralized logging provides benefits like:
 
 There are many providers for centralized logging solutions, such as Datadog, New Relic, or self-hosted options. In this example, we will use the popular ELK Stack (Elasticsearch, Logstash, Kibana) to demonstrate how to integrate Jmix with a centralized logging solution.
 
-=== Setting up the ELK Stack with Docker
+[[setting-up-the-elk-stack]]
+=== Setting up the ELK Stack
 
 To set up the ELK Stack, we will use Docker to run Elasticsearch, Logstash, and Kibana. This setup will allow us to collect, store, and visualize logs in real-time. Start by creating a `docker-compose.yml` file in the root of your project and add the following configuration:
 
@@ -347,13 +352,14 @@ include::example$/src/main/resources/logback-spring.xml[]
 
 With this setup, the `LogstashTcpSocketAppender` sends logs from the Jmix application to Logstash. This allows us to centralize and process logs through Elasticsearch and visualize them in Kibana.
 
+[[viewing-logs-in-kibana]]
 === Viewing Logs in Kibana
 
 Once the ELK Stack is up and running, you can access Kibana at `http://localhost:5601/app/logs`. This web interface allows you to search, filter, and visualize logs sent from your Jmix application. Kibana provides a powerful interface for exploring log data, enabling you to drill down into specific events, correlate logs across services, and create dashboards for monitoring.
 
 The MDC values are stored in the Elasticsearch index as dedicated fields, which makes it possible to easily search for them and display them as columns in Kibana. This allows you to filter logs by MDC values such as **pedId** or **jmixUser** and see them directly in the log view. As shown in the screenshot below, these fields appear alongside standard log data, making it easier to analyze logs based on the custom context from your application:
 
-image::jmix-kibana-logs.png[Kibana Logs Visualization, link="images/jmix-kibana-logs.png"]
+image::jmix-kibana-logs.png[Kibana Logs Visualization, link="_images/jmix-kibana-logs.png"]
 
 To learn more about using Kibana to search and analyze logs, refer to the official Kibana documentation:
 https://www.elastic.co/guide/en/kibana/current/discover.html[Kibana Discover Documentation^].
