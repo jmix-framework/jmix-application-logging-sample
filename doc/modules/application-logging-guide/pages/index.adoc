@@ -284,16 +284,6 @@ For more details on how MDC works, refer to the official Logback documentation: 
 [[logging-to-a-centralized-logging-solution]]
 == Logging to a Centralized Logging Solution
 
-With centralized logging, all log data is collected and stored in one place, rather than on individual servers or files. This makes it easier to access, search, and analyze logs. Instead of hunting through different log files, you can manage everything from a single platform. Here are a couple of benefits a centralized Logging Solution provides:
-
-== Logging to a Centralized Logging Solution
-
-With centralized logging, all log data is collected and stored in one place, rather than scattered across individual servers or files. This makes it much easier to search, access, and analyze logs, no matter the size of your application. Even for smaller applications, centralized logging can be helpful because it allows you to quickly find specific log entries and troubleshoot issues more efficiently.
-
-Centralized logging provides benefits like:
-
-== Logging to a Centralized Logging Solution
-
 With centralized logging, all log data is collected and stored in one place, rather than scattered across individual servers or files. This makes it much easier to search, access, and analyze logs, no matter the size of your application. Even for smaller applications, centralized logging can be helpful because it allows you to quickly find specific log entries and troubleshoot issues more efficiently.
 
 Centralized logging provides benefits like:
