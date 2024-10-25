@@ -129,7 +129,7 @@ This configuration defines different logging levels for various components of th
 
 To change a logging level, simply update the corresponding line in `application.properties`, and the new level will take effect after restarting the application. This flexibility allows you to tailor the logging output for different environments, such as more detailed logging in development and more minimal logs in production.
 
-You can configure logging levels for any package or class that is not already defined by simply adding `logging.level.{packageName}` to the `application.properties` file. You can also specify the logging level for individual classes directly.
+You can configure logging levels for any package or class that is not already defined by simply adding `logging.level.io.jmix.petclinic.service` to the `application.properties` file. You can also specify the logging level for individual classes directly.
 
 For example:
 [source,properties,indent=0]
