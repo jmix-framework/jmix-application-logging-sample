@@ -23,13 +23,13 @@ Alternatively, you can **start with the base Petclinic project** and follow the 
 In this guide, we extend the https://github.com/jmix-framework/jmix-petclinic-2[Jmix Petclinic^] application by configuring custom log outputs, adjusting log levels, and adding context-sensitive MDC values to ensure that key information, such as the Pet ID, is consistently included in log entries. We enable SQL logging to gain insight into the database queries being executed, which is crucial for diagnosing performance issues and understanding how data is being retrieved. Finally, we integrate Jmix with a centralized log management solution (Elasticsearch and Kibana), making it easier to monitor and analyze logs from a unified interface.
 
 
-[[final-application]]
-=== Final Application
-
-video::zTYx_KSeMzY[youtube,width=1280,height=600]
+// [[final-application]]
+// === Final Application
+//
+// video::zTYx_KSeMzY[youtube,width=1280,height=600]
 
 [[why-application-loggig-is-essential]]
-==== Why Application Logging is Essential
+=== Why Application Logging is Essential
 
 Once an application is deployed, logging becomes one of the primary ways to gain insight into its operational state. Logs offer visibility into the application’s flow, making them essential for understanding behavior in production. They allow developers to identify and diagnose issues, capturing details about unexpected events or failures, and providing context that helps with debugging production issues.
 
