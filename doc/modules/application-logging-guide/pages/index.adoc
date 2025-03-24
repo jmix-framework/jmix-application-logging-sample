@@ -321,16 +321,17 @@ include::example$/docker-compose.yml[]
 
 This configuration starts three containers: Elasticsearch is responsible for storing the log data, Logstash receives logs from the Jmix application and forwards them to Elasticsearch for storage, and Kibana provides a web interface where you can visualize and search through the log data.
 
-The Logstash configuration file (`logstash.conf`) is included below:
+The Logstash configuration file is included below:
 
 [source,indent=0]
+.logstash.conf
 ----
 include::example$/logstash.conf[]
 ----
 
-This configuration is divided into two sections. The `input` block sets up a TCP listener on port 5044 and uses a JSON codec. This ensures that incoming log messages are interpreted as JSON. The `output` block forwards the parsed log events to an Elasticsearch cluster available at `http://elasticsearch:9200`.
+This configuration is divided into two sections. The `input` block sets up a TCP listener on port 5044 and uses a JSON codec. This ensures that incoming log messages are interpreted as JSON. The `output` block forwards the parsed log events to an Elasticsearch cluster available at http://elasticsearch:9200[^].
 
-For more information on logstash configuration see: https://www.elastic.co/guide/en/logstash/current/configuration.html[Logstash Docs: Creating a Logstash pipeline].
+For more information on logstash configuration see: https://www.elastic.co/guide/en/logstash/current/configuration.html[Logstash Docs: Creating a Logstash pipeline^].
 
 You can start these services with the following command:
 
@@ -339,7 +340,7 @@ You can start these services with the following command:
 $ docker compose up
 ----
 
-Once the services are running, Kibana will be accessible at `http://localhost:5601`, where you can explore and visualize logs in real-time.
+Once the services are running, Kibana will be accessible at http://localhost:5601[^], where you can explore and visualize logs in real-time.
 
 [[configure-logging-to-logstash]]
 === Configure Logging to Logstash
@@ -375,7 +376,7 @@ With this setup, the `LogstashTcpSocketAppender` sends logs from the Jmix applic
 [[viewing-logs-in-kibana]]
 === Viewing Logs in Kibana
 
-Once the ELK Stack is up and running, you can access Kibana at `http://localhost:5601/app/logs`. This web interface allows you to search, filter, and visualize logs sent from your Jmix application. Kibana provides a powerful interface for exploring log data, enabling you to drill down into specific events, correlate logs across services, and create dashboards for monitoring.
+Once the ELK Stack is up and running, you can access Kibana at http://localhost:5601/app/logs[^]. This web interface allows you to search, filter, and visualize logs sent from your Jmix application. Kibana provides a powerful interface for exploring log data, enabling you to drill down into specific events, correlate logs across services, and create dashboards for monitoring.
 
 The MDC values are stored in the Elasticsearch index as dedicated fields, which makes it possible to easily search for them and display them as columns in Kibana. This allows you to filter logs by MDC values such as **pedId** or **jmixUser** and see them directly in the log view. As shown in the screenshot below, these fields appear alongside standard log data, making it easier to analyze logs based on the custom context from your application:
 
