@@ -378,7 +378,7 @@ With this setup, the `LogstashTcpSocketAppender` sends logs from the Jmix applic
 
 Once the ELK Stack is up and running, you can access Kibana at http://localhost:5601/app/logs[^]. This web interface allows you to search, filter, and visualize logs sent from your Jmix application. Kibana provides a powerful interface for exploring log data, enabling you to drill down into specific events, correlate logs across services, and create dashboards for monitoring.
 
-The MDC values are stored in the Elasticsearch index as dedicated fields, which makes it possible to easily search for them and display them as columns in Kibana. This allows you to filter logs by MDC values such as **pedId** or **jmixUser** and see them directly in the log view. As shown in the screenshot below, these fields appear alongside standard log data, making it easier to analyze logs based on the custom context from your application:
+The MDC values are stored in the Elasticsearch index as dedicated fields, which makes it possible to easily search for them and display them as columns in Kibana. This allows you to filter logs by MDC values such as **petId** or **jmixUser** and see them directly in the log view. As shown in the screenshot below, these fields appear alongside standard log data, making it easier to analyze logs based on the custom context from your application:
 
 image::jmix-kibana-logs.png[Kibana Logs Visualization, link="_images/jmix-kibana-logs.png"]
 
