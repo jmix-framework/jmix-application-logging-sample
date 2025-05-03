@@ -29,13 +29,7 @@ git checkout {page-origin-branch}
 [[what-we-are-going-to-build]]
 == What We are Going to Build
 
-In this guide, we extend the https://github.com/jmix-framework/jmix-petclinic-2[Jmix Petclinic^] application by configuring custom log outputs, adjusting log levels, and adding context-sensitive MDC values to ensure that key information, such as the Pet ID, is consistently included in log entries. We enable SQL logging to gain insight into the database queries being executed, which is crucial for diagnosing performance issues and understanding how data is being retrieved. Finally, we integrate Jmix with a centralized log management solution (Elasticsearch and Kibana), making it easier to monitor and analyze logs from a unified interface.
-
-
-// [[final-application]]
-// === Final Application
-//
-// video::zTYx_KSeMzY[youtube,width=1280,height=600]
+In this guide, we extend the https://github.com/jmix-framework/jmix-petclinic-2[Jmix Petclinic^] application by configuring custom log outputs, adjusting log levels, and adding context-sensitive MDC values to ensure that key information, such as the Pet ID, is consistently included in log entries. We enable SQL logging to gain insight into the database queries being executed, which is crucial for diagnosing performance issues and understanding how data is being retrieved.
 
 [[why-application-loggig-is-essential]]
 === Why Application Logging is Essential
@@ -135,6 +129,7 @@ include::example$/src/main/resources/application.properties[tags=logging-level-c
 ----
 
 This configuration defines different logging levels for various components of the Jmix application and the underlying libraries like `EclipseLink` and `Liquibase`. For example:
+
 - The logging level for `io.jmix` is set to `INFO`, which means only important informational messages, warnings, and errors will be logged.
 - The level for `liquibase` is set to `WARN`, so only warning and error messages are logged, reducing verbosity.
 
@@ -294,109 +289,17 @@ It is important to clear the MDC context after the operation is complete using `
 
 For more details on how MDC works, refer to the official Logback documentation: https://logback.qos.ch/manual/mdc.html[Logback Manual: MDC].
 
-[[centralized-logging]]
-== Centralized Logging
-
-With centralized logging, all log data is collected and stored in one place, rather than scattered across individual servers or files. This makes it much easier to search, access, and analyze logs, no matter the size of your application. Even for smaller applications, centralized logging can be helpful because it allows you to quickly find specific log entries and troubleshoot issues more efficiently.
-
-Centralized logging provides benefits like:
-
-- **Easy accessibility**: Logs can be accessed through a web interface, making them searchable and easier to explore. This enables real-time troubleshooting and monitoring without requiring direct access to the servers.
-- **Collaboration**: Centralized logging allows team members to share and link logs, which can help in debugging or reviewing incidents together.
-- **Correlating logs**: Logs from multiple services can be aggregated in one place, making it easier to correlate events across different systems or services.
-- **Alerting**: Many centralized logging solutions offer built-in alerting capabilities. This allows you to set up notifications for specific log messages, so you can be immediately notified when critical errors or issues occur.
-- **Enhanced observability**: Centralized logging solutions often integrate with metrics collection systems, combining logs with performance metrics. This ties directly into the concept of observability, where logs, metrics, and other signals are used together to gain a more comprehensive view of your application's performance and health.
-
-There are many providers for centralized logging solutions, such as Datadog, New Relic, or self-hosted options. In this example, we will use the popular ELK Stack (Elasticsearch, Logstash, Kibana) to demonstrate how to integrate Jmix with a centralized logging solution.
-
-[[setting-up-the-elk-stack]]
-=== Setting up the ELK Stack
-
-To set up the ELK Stack, we will use Docker to run Elasticsearch, Logstash, and Kibana. This setup will allow us to collect, store, and visualize logs in real-time. Start by creating a `docker-compose.yml` file in the root of your project and add the following configuration:
-
-[source,yml,indent=0]
-----
-include::example$/docker-compose.yml[]
-----
-
-This configuration starts three containers: Elasticsearch is responsible for storing the log data, Logstash receives logs from the Jmix application and forwards them to Elasticsearch for storage, and Kibana provides a web interface where you can visualize and search through the log data.
-
-The Logstash configuration file is included below:
-
-[source,indent=0]
-.logstash.conf
-----
-include::example$/logstash.conf[]
-----
-
-This configuration is divided into two sections. The `input` block sets up a TCP listener on port 5044 and uses a JSON codec. This ensures that incoming log messages are interpreted as JSON. The `output` block forwards the parsed log events to an Elasticsearch cluster available at http://elasticsearch:9200[^].
-
-For more information on logstash configuration see: https://www.elastic.co/guide/en/logstash/current/configuration.html[Logstash Docs: Creating a Logstash pipeline^].
-
-You can start these services with the following command:
-
-[source,bash,indent=0]
-----
-$ docker compose up
-----
-
-Once the services are running, Kibana will be accessible at http://localhost:5601[^], where you can explore and visualize logs in real-time.
-
-[[configure-logging-to-logstash]]
-=== Configure Logging to Logstash
-
-Next, we will configure the Jmix application to send logs to Logstash, which will forward them to Elasticsearch. This involves two steps: adding the necessary dependencies and modifying the logging configuration.
-
-First, add the following dependencies to your `build.gradle` file:
-
-.build.gradle
-[source,gradle,indent=0]
-----
-dependencies {
-
-    // ...
-
-    implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
-    implementation 'ch.qos.logback:logback-classic:1.5.6'
-}
-----
-
-These dependencies include the Logstash encoder and Logback classic, allowing us to configure Logstash in our logging configuration.
-
-Next, modify the `logback-spring.xml` file to include a Logstash appender, which will send logs to the Logstash service:
-
-.logback-spring.xml
-[source,xml,indent=0]
-----
-include::example$/src/main/resources/logback-spring.xml[]
-----
-
-With this setup, the `LogstashTcpSocketAppender` sends logs from the Jmix application to Logstash. This allows us to centralize and process logs through Elasticsearch and visualize them in Kibana.
-
-[[viewing-logs-in-kibana]]
-=== Viewing Logs in Kibana
-
-Once the ELK Stack is up and running, you can access Kibana at http://localhost:5601/app/logs[^]. This web interface allows you to search, filter, and visualize logs sent from your Jmix application. Kibana provides a powerful interface for exploring log data, enabling you to drill down into specific events, correlate logs across services, and create dashboards for monitoring.
-
-The MDC values are stored in the Elasticsearch index as dedicated fields, which makes it possible to easily search for them and display them as columns in Kibana. This allows you to filter logs by MDC values such as **petId** or **jmixUser** and see them directly in the log view. As shown in the screenshot below, these fields appear alongside standard log data, making it easier to analyze logs based on the custom context from your application:
-
-image::jmix-kibana-logs.png[Kibana Logs Visualization, link="_images/jmix-kibana-logs.png"]
-
-To learn more about using Kibana to search and analyze logs, refer to the official Kibana documentation:
-https://www.elastic.co/guide/en/kibana/current/discover.html[Kibana Discover Documentation^].
-
-With this setup, you can now efficiently monitor and analyze your application's logs in a centralized location, making it easier to troubleshoot, optimize, and collaborate on any issues that arise.
-
 [[summary]]
 == Summary
 
 This guide demonstrated how effective logging can be implemented in a Jmix application using the Java ecosystem. We explored basic logging concepts, how to use Slf4J and logback to write log messages, and advanced features like MDC (Mapped Diagnostic Context) to include contextual information, such as a Pet ID, across log messages automatically.
 
-We also looked at how logging levels can be customized for different environments, either through configuration files or dynamic environment variables. Additionally, we touched upon centralized logging solutions, like Elasticsearch, for managing and analyzing logs externally.
+We also looked at how logging levels can be customized for different environments, either through configuration files or dynamic environment variables.
 
 Logging is essential for observability and debugging in production environments. Properly configured logging ensures that administrators can track down issues without direct access to the running application, making it a core aspect of application maintenance and monitoring.
 
 [[further-information]]
 === Further Information
+
 * https://docs.spring.io/spring-boot/reference/features/logging.html[Spring Boot Logging Documentation^]
 * https://logback.qos.ch/manual/index.html[Logback Manual]
