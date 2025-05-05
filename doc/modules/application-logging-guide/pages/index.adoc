@@ -301,7 +301,6 @@ Logging is essential for observability and debugging in production environments.
 [[further-information]]
 === Further Information
 
-* xref:observability-logging-guide:index.adoc[Advanced Guide on Observability: Logging]
+* xref:observability-logging-guide:index.adoc[Advanced Guide on Observability: Centralized Logging]
 * https://docs.spring.io/spring-boot/reference/features/logging.html[Spring Boot Logging Documentation^]
-* https://docs.spring.io/spring-boot/reference/features/logging.html[Spring Boot Logging Documentation^]
-* https://logback.qos.ch/manual/index.html[Logback Manual]
+* https://logback.qos.ch/manual/index.html[Logback Manual^]
