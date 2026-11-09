@@ -298,9 +298,12 @@ We also looked at how logging levels can be customized for different environment
 
 Logging is essential for observability and debugging in production environments. Properly configured logging ensures that administrators can track down issues without direct access to the running application, making it a core aspect of application maintenance and monitoring.
 
+The logs of a single application instance are convenient to read in the console. Collecting the logs of several instances in one place is described in the xref:observability-logging-guide:index.adoc[centralized logging guide].
+
 [[further-information]]
 === Further Information
 
+* xref:features:observability/logging.adoc[Logging]: log levels and categories, MDC, SQL statement output
 * xref:observability-logging-guide:index.adoc[Advanced Guide on Observability: Centralized Logging]
 * https://docs.spring.io/spring-boot/reference/features/logging.html[Spring Boot Logging Documentation^]
 * https://logback.qos.ch/manual/index.html[Logback Manual^]
